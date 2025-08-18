@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -24,9 +26,10 @@ export default function SheetChapter({
   slug: string;
 }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false); // <-- controlled state
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline">
           <List />
@@ -44,7 +47,10 @@ export default function SheetChapter({
               const isSelected = pathname?.endsWith(chapter.url);
               return (
                 <div key={index}>
-                  <Link href={`/komik/${slug}/${chapter.url}`}>
+                  <Link
+                    href={`/komik/${slug}/${chapter.url}`}
+                    onClick={() => setOpen(false)} // <-- menutup sheet saat klik
+                  >
                     <p
                       className={cn(
                         "p-3 font-medium cursor-pointer transition-colors",

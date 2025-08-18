@@ -8,7 +8,6 @@ export default function Komik() {
   return (
     <Container>
       <h1 className="text-2xl font-bold">Hot Komik</h1>
-
       <ScrollArea className="mt-2 w-full">
         <div className="flex gap-4 w-max">
           <Suspense fallback={<KomikSkeleton />}>

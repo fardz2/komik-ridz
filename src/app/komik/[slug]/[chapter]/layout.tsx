@@ -1,24 +1,25 @@
-import Container from "@/components/layouts/container";
-import { getKomikDetail } from "@/services/detail-komik.service";
-import SheetChapter from "./_components/ui/sheet-chapter";
-import NavBarChapter from "./_components/layouts/nav-bar-chapter";
+import { getChapterDetail } from "@/services/detail-komik.service";
+import BottomNavBarChapter from "../_components/layouts/bottom-navbar";
+import { ChapterDetail } from "@/types/detail-komik.type";
+
 interface ChapterLayoutProps {
   children: React.ReactNode;
 }
-interface params {
-  slug: string;
-}
+
 export default async function ChapterLayout({
-  params,
   children,
-}: ChapterLayoutProps & { params: Promise<params> }) {
-  const { slug } = await params;
-  const chapterData = await getKomikDetail(slug);
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<ChapterDetail>;
+}) {
+  const { slug, chapter } = await params;
+  const chapterData = await getChapterDetail(slug, chapter);
 
   return (
-    <Container>
-      <NavBarChapter KomikDetail={chapterData.data} />
+    <>
       {children}
-    </Container>
+      <BottomNavBarChapter chapterDetail={chapterData.data} />
+    </>
   );
 }

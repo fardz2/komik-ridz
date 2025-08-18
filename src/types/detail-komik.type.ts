@@ -28,8 +28,8 @@ export interface ChapterDetail {
   chapter: string;
   images: string[];
   chaptersList: ChapterList[];
-  prevChapter: string | null;
-  nextChapter: string | null;
+  prevChapter: string ;
+  nextChapter: string;
 }
 export interface ChapterList {
   title: string;
