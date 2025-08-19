@@ -1,9 +1,16 @@
+// app/daftar-komik/page.tsx
+
 import Container from "@/components/layouts/container";
-import { getDaftarKomik } from "@/services/komik.service";
-import CardKomik from "../_components/ui/card-komik";
+
 import { ComicFilters } from "./_components/ui/daftar-komik-filter";
 import { Suspense } from "react";
 import { PaginationControls } from "@/components/ui/pagination-control";
+
+import { getDaftarKomik } from "@/services/komik.service";
+import { KomikList } from "./_components/layouts/daftar-komik";
+
+// SOLUSI UTAMA: Paksa rendering dinamis
+export const dynamic = "force-dynamic";
 
 interface DaftarKomikPageProps {
   searchParams?: {
@@ -30,7 +37,10 @@ export default async function DaftarKomikPage({
     orderby: searchParams?.orderby || "All",
   };
 
-  const daftarKomik = await getDaftarKomik(filters);
+  // Fetch pagination data di komponen utama agar bisa di-pass ke PaginationControls
+  // Ini bisa dioptimalkan lebih lanjut, tapi untuk sekarang ini sudah cukup
+  const { pagination } = await getDaftarKomik(filters);
+
   return (
     <Container>
       <div className="flex items-center justify-between">
@@ -38,26 +48,21 @@ export default async function DaftarKomikPage({
         <ComicFilters />
       </div>
       <div className="flex flex-wrap gap-4 justify-center xl:justify-start">
-        <Suspense fallback={<div>Loading...</div>}>
-          {daftarKomik.data.map((komik) => (
-            <CardKomik
-              key={komik.slug}
-              title={komik.title}
-              slug={komik.slug}
-              image={komik.image}
-              type={komik.type}
-              chapter={komik.chapter}
-              rating={komik.rating}
-            />
-          ))}
+        <Suspense
+          fallback={
+            <div className="w-full text-center p-8">Memuat komik...</div>
+          }
+        >
+          {/* Panggil komponen async di dalam Suspense */}
+          <KomikList filters={filters} />
         </Suspense>
       </div>
       <div className="mt-5 mb-10">
         <PaginationControls
-          currentPage={daftarKomik.pagination?.currentPage ?? 1}
-          totalPages={daftarKomik.pagination?.totalPages ?? 1}
-          hasNext={daftarKomik.pagination?.hasNext ?? false}
-          hasPrev={daftarKomik.pagination?.hasPrev ?? false}
+          currentPage={pagination?.currentPage ?? 1}
+          totalPages={pagination?.totalPages ?? 1}
+          hasNext={pagination?.hasNext ?? false}
+          hasPrev={pagination?.hasPrev ?? false}
         />
       </div>
     </Container>
