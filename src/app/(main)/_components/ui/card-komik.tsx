@@ -1,10 +1,5 @@
 import { KomikItem } from "@/types/komik.type";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import CustomImage from "@/components/ui/custom-image";
