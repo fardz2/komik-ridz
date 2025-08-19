@@ -224,16 +224,19 @@ export function ComicFilters() {
           {hasActiveFilters && <Badge variant="secondary">Active</Badge>}
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-md sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Filter Comics</DialogTitle>
         </DialogHeader>
-        <div className="flex gap-4 ">
-          {/* Genre Filter */}
-          <div className="flex-1">
+
+        {/* Wrapper utama untuk tata letak responsif */}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+          {/* Kolom Genre */}
+          <div className="w-full sm:w-1/2">
             <h3 className="font-semibold mb-3">Genres</h3>
             <ScrollArea className="w-full h-72 pr-4">
-              <div className="space-y-2">
+              {/* Tambahkan div ini untuk grid 2 kolom di mobile */}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {genres.map((genre) => (
                   <div key={genre} className="flex items-center space-x-2">
                     <Checkbox
@@ -245,7 +248,7 @@ export function ComicFilters() {
                     />
                     <label
                       htmlFor={`modal-${genre}`}
-                      className="text-sm font-medium leading-none"
+                      className="text-sm font-medium leading-none cursor-pointer"
                     >
                       {genre}
                     </label>
@@ -256,8 +259,8 @@ export function ComicFilters() {
             </ScrollArea>
           </div>
 
-          {/* Other Filters */}
-          <div className="space-y-6 flex-1">
+          {/* Kolom untuk filter lainnya */}
+          <div className="w-full sm:w-1/2 flex flex-wrap sm:flex-col gap-4">
             {(
               [
                 {
@@ -274,7 +277,7 @@ export function ComicFilters() {
               ] as const
             ).map(({ key, label, options }) => (
               <div key={key}>
-                <h3 className="font-semibold mb-3">{label}</h3>
+                <h3 className="font-semibold mb-2">{label}</h3>
                 <Select
                   value={activeFilters[key]}
                   onValueChange={(value) => handleModalFilterChange(key, value)}
@@ -295,9 +298,9 @@ export function ComicFilters() {
           </div>
         </div>
 
-        {/* Active Filters Display */}
+        {/* Active Filters Display (Tidak ada perubahan di sini) */}
         {hasActiveFilters && (
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="border-t pt-4 mt-2 flex items-center gap-2 flex-wrap">
             <span className="text-sm font-semibold">Active:</span>
             {activeFilters.genre.map((genre) => (
               <Badge key={genre} variant="secondary" className="gap-1">
