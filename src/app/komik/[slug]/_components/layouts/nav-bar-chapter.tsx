@@ -3,16 +3,22 @@ import Container from "@/components/layouts/container";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
 import SheetChapter from "../ui/sheet-chapter";
-import { KomikDetail } from "@/types/detail-komik.type";
+import { ChapterList, KomikDetail } from "@/types/detail-komik.type";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+interface NavBarChapterProps {
+  slug: KomikDetail["slug"];
+  title: KomikDetail["title"];
+  chapters: ChapterList[];
+}
+
 export default function NavBarChapter({
-  KomikDetail,
-}: {
-  KomikDetail: KomikDetail;
-}) {
+  slug,
+  title,
+  chapters,
+}: NavBarChapterProps) {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -43,7 +49,7 @@ export default function NavBarChapter({
     >
       <Container className="flex items-center justify-between py-3">
         <div className="flex items-center gap-5">
-          <Link href={`/komik/${KomikDetail.slug}`}>
+          <Link href={`/komik/${slug}`}>
             <Button variant="outline">
               <ChevronLeftIcon /> <p className="hidden md:block">Back</p>
             </Button>
@@ -51,7 +57,7 @@ export default function NavBarChapter({
 
           <div>
             <h3 className="md:text-xl text-md font-semibold truncate max-w-[120px] md:max-w-2xl">
-              {KomikDetail.title}
+              {title}
             </h3>
             {currentChapterNumber && (
               <p className="text-sm">Chapter {currentChapterNumber}</p>
@@ -59,10 +65,7 @@ export default function NavBarChapter({
           </div>
         </div>
 
-        <SheetChapter
-          chapterList={KomikDetail.chapters}
-          slug={KomikDetail.slug}
-        />
+        <SheetChapter chapterList={chapters} slug={slug} />
       </Container>
     </nav>
   );

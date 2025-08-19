@@ -3,8 +3,8 @@ import { ChapterDetailResponse, KomikDetailResponse } from "@/types/detail-komik
 export async function getKomikDetail(slug: string): Promise<KomikDetailResponse> {
   try {
     const res = await fetch(`https://api-komik-rho.vercel.app/api/komik/detail/${slug}`, {
-            headers: { "Content-Type": "application/json" },
-      next: { tags: ['komik'], revalidate:60 }
+        headers: { "Content-Type": "application/json" },
+        next: { revalidate: 60 },
     });
 
     if (!res.ok) {
@@ -39,15 +39,15 @@ export async function getKomikDetail(slug: string): Promise<KomikDetailResponse>
 
 export async function getChapterDetail(slug: string, chapter: string): Promise<ChapterDetailResponse> {
   try {
+    
     const res = await fetch(`https://api-komik-rho.vercel.app/api/komik/detail/${slug}/${chapter}`, {
       headers: { "Content-Type": "application/json" },
-      next: { tags: ['chapter'], revalidate: 60 }
+      cache: "no-store",
     });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch chapter detail: ${res.status} ${res.statusText}`);
     }
-
     const data = (await res.json()) as ChapterDetailResponse;
     return data;
   } catch (error) {

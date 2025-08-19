@@ -1,49 +1,42 @@
-"use client";
-
-import { useState } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  LayoutGrid,
-  LayoutList,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ChapterDetail } from "@/types/detail-komik.type";
 
-import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
 import Container from "@/components/layouts/container";
+import ImageKomik from "../ui/image-komik";
+import { Suspense } from "react";
 
 interface ChapterDetailProps {
-  chapterData: ChapterDetail;
+  images: ChapterDetail["images"];
 }
 
-export function ChapterDetailComponent({ chapterData }: ChapterDetailProps) {
+export function ChapterDetailComponent({ images }: ChapterDetailProps) {
+  if (!images || images.length === 0) {
+    return <div>No images available for this chapter.</div>;
+  }
   return (
     <>
       <Container className="hidden md:block">
         <div className="min-h-screen">
-          {chapterData.images.map((image, index) => (
-            <img
-              src={image || "/placeholder.svg"}
-              alt={`Page ${index + 1}`}
-              className="w-full h-auto object-contain"
-              key={index}
-            />
-          ))}
+          <Suspense fallback={<div>Loading...</div>}>
+            {images.map((image, index) => (
+              <ImageKomik
+                key={index}
+                src={image || "/placeholder.svg"}
+                alt={`Page ${index + 1}`}
+              />
+            ))}
+          </Suspense>
         </div>
       </Container>
       <div className="min-h-screen block md:hidden">
-        {chapterData.images.map((image, index) => (
-          <img
-            src={image || "/placeholder.svg"}
-            alt={`Page ${index + 1}`}
-            className="w-full h-auto object-contain"
-            key={index}
-          />
-        ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          {images.map((image, index) => (
+            <ImageKomik
+              key={index}
+              src={image || "/placeholder.svg"}
+              alt={`Page ${index + 1}`}
+            />
+          ))}
+        </Suspense>
       </div>
     </>
   );

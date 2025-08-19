@@ -8,11 +8,15 @@ import Link from "next/link";
 import Container from "@/components/layouts/container";
 
 interface ChapterDetailProps {
-  chapterDetail: ChapterDetail;
+  prevChapter: ChapterDetail["prevChapter"];
+  nextChapter: ChapterDetail["nextChapter"];
+  slug: ChapterDetail["slug"];
 }
 
 export default function BottomNavBarChapter({
-  chapterDetail,
+  prevChapter,
+  nextChapter,
+  slug,
 }: ChapterDetailProps) {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -42,20 +46,16 @@ export default function BottomNavBarChapter({
       }`}
     >
       <Container className="flex items-center justify-between py-3">
-        {chapterDetail?.prevChapter && (
-          <Link
-            href={`/komik/${chapterDetail.slug}/${chapterDetail.prevChapter}`}
-          >
+        {prevChapter && (
+          <Link href={`/komik/${slug}/${prevChapter}`}>
             <Button variant="outline" className="flex items-center">
               <ChevronLeft className="mr-2" />
               Previous
             </Button>
           </Link>
         )}
-        {chapterDetail?.nextChapter && (
-          <Link
-            href={`/komik/${chapterDetail.slug}/${chapterDetail.nextChapter}`}
-          >
+        {nextChapter && (
+          <Link href={`/komik/${slug}/${nextChapter}`}>
             <Button variant="outline" className="flex items-center">
               <ChevronRight className="mr-2" />
               Next

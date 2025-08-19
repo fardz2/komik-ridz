@@ -19,7 +19,11 @@ export default async function ChapterLayout({
   return (
     <>
       {children}
-      <BottomNavBarChapter chapterDetail={chapterData.data} />
+      <BottomNavBarChapter
+        prevChapter={chapterData.data.prevChapter}
+        nextChapter={chapterData.data.nextChapter}
+        slug={slug}
+      />
     </>
   );
 }

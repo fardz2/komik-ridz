@@ -24,7 +24,11 @@ export default async function ChapterLayout({
   return (
     <Container>
       <Suspense fallback={<div>Loading...</div>}>
-        <NavBarChapter KomikDetail={chapterData.data} />
+        <NavBarChapter
+          slug={chapterData.data.slug}
+          title={chapterData.data.title}
+          chapters={chapterData.data.chapters}
+        />
       </Suspense>
       <div className="mt-20">{children}</div>
     </Container>
