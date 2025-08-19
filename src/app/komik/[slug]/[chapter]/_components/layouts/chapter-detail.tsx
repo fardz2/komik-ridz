@@ -6,9 +6,10 @@ import { Suspense } from "react";
 
 interface ChapterDetailProps {
   images: ChapterDetail["images"];
+  slug: string;
 }
 
-export function ChapterDetailComponent({ images }: ChapterDetailProps) {
+export function ChapterDetailComponent({ images, slug }: ChapterDetailProps) {
   if (!images || images.length === 0) {
     return <div>No images available for this chapter.</div>;
   }
@@ -33,7 +34,7 @@ export function ChapterDetailComponent({ images }: ChapterDetailProps) {
             <ImageKomik
               key={index}
               src={image || "/placeholder.svg"}
-              alt={`Page ${index + 1}`}
+              alt={`${slug} ${index + 1}`}
             />
           ))}
         </Suspense>

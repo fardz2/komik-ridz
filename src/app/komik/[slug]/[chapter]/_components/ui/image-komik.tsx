@@ -15,6 +15,16 @@ export default function CustomImage({
   width = 800, // default
   height = 1200, // default
 }: CustomImageProps) {
+  // Jika src kosong, render div dengan background abu-abu
+  if (!src) {
+    return (
+      <div
+        className={`w-full h-auto bg-gray-200 ${className}`}
+        style={{ width: `${width}px`, height: `${height}px` }}
+      />
+    );
+  }
+
   return (
     <Image
       src={src}

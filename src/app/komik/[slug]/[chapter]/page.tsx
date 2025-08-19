@@ -22,7 +22,7 @@ export default async function Chapter({
   }
   return (
     <Suspense fallback={<ChapterDetailSkeleton />}>
-      <ChapterDetailComponent images={chapterData.data.images} />
+      <ChapterDetailComponent images={chapterData.data.images} slug={slug} />
     </Suspense>
   );
 }

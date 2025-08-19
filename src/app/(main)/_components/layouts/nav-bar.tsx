@@ -1,9 +1,10 @@
+import Container from "@/components/layouts/container";
 import Link from "next/link";
 
 export default function NavBar() {
   return (
     <nav className="bg-gray-800 text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
+      <Container className=" flex justify-between items-center">
         <div className="text-lg font-bold">KomikRidz</div>
         <ul className="flex space-x-4">
           <li>
@@ -17,7 +18,7 @@ export default function NavBar() {
             </Link>
           </li>
         </ul>
-      </div>
+      </Container>
     </nav>
   );
 }
