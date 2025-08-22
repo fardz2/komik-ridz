@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChapterDetail } from "@/types/detail-komik.type";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/layouts/container";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibilty";
 
 interface ChapterDetailProps {
   prevChapter: ChapterDetail["prevChapter"];
@@ -18,31 +18,12 @@ export default function BottomNavBarChapter({
   nextChapter,
   slug,
 }: ChapterDetailProps) {
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        // scroll ke bawah → sembunyikan
-        setShow(false);
-      } else {
-        // scroll ke atas → tampilkan
-        setShow(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  const isVisible = useScrollVisibility();
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0  shadow transition-transform duration-300 ${
-        show ? "translate-y-0" : "translate-y-full"
+      className={`fixed bottom-0 left-0 right-0 shadow transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "translate-y-full" // 3. Gunakan hasilnya
       }`}
     >
       <Container className="flex items-center justify-between py-3">

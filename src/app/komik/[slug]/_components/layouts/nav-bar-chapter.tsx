@@ -1,4 +1,5 @@
 "use client";
+
 import Container from "@/components/layouts/container";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
@@ -6,7 +7,7 @@ import SheetChapter from "../ui/sheet-chapter";
 import { ChapterList, KomikDetail } from "@/types/detail-komik.type";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibilty";
 
 interface NavBarChapterProps {
   slug: KomikDetail["slug"];
@@ -20,26 +21,10 @@ export default function NavBarChapter({
   chapters,
 }: NavBarChapterProps) {
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const isVisible = useScrollVisibility(); // 2. Gunakan hook
 
-  // Cek apakah ada chapter dengan format "chapter-<angka>"
   const chapterMatch = pathname?.match(/chapter-(\d+)/);
   const currentChapterNumber = chapterMatch ? chapterMatch[1] : null;
-
-  // Scroll listener untuk hide/show navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 50) {
-        setIsVisible(false); // scroll ke bawah → hide
-      } else {
-        setIsVisible(true); // scroll ke atas → show
-      }
-      setLastScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   return (
     <nav
@@ -56,7 +41,7 @@ export default function NavBarChapter({
           </Link>
 
           <div>
-            <h3 className="md:text-xl text-md font-semibold truncate max-w-[120px] md:max-w-2xl">
+            <h3 className="md:text-xl text-md font-semibold truncate max-w-[120px] sm:max-w-2xs lg:max-w-xl xl:max-w-2xl">
               {title}
             </h3>
             {currentChapterNumber && (

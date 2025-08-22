@@ -22,7 +22,7 @@ export default async function ChapterLayout({
 
   const chapterData = await getKomikDetail(slug);
   return (
-    <Container>
+    <>
       <Suspense fallback={<div>Loading...</div>}>
         <NavBarChapter
           slug={chapterData.data.slug}
@@ -30,7 +30,7 @@ export default async function ChapterLayout({
           chapters={chapterData.data.chapters}
         />
       </Suspense>
-      <div className="mt-20">{children}</div>
-    </Container>
+      <div className="mt-16">{children}</div>
+    </>
   );
 }
