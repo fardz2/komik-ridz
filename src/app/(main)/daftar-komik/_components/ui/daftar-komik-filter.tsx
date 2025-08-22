@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useDebouncedCallback } from "use-debounce"; // Import useDebouncedCallback
 
 // --- Types and Constants ---
 interface ComicFilters {
@@ -135,13 +136,13 @@ export function ComicFilters() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Memoized handlers
-  const updateUrlAndFilters = useCallback(
+  // Debounced updateUrlAndFilters
+  const updateUrlAndFilters = useDebouncedCallback(
     (newFilters: ComicFilters) => {
       setActiveFilters(newFilters);
       router.push(`?${createSearchString(newFilters)}`, { scroll: false });
     },
-    [router]
+    100 // 300ms debounce delay
   );
 
   const handleModalGenreChange = useCallback(
@@ -229,13 +230,10 @@ export function ComicFilters() {
           <DialogTitle>Filter Comics</DialogTitle>
         </DialogHeader>
 
-        {/* Wrapper utama untuk tata letak responsif */}
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-          {/* Kolom Genre */}
           <div className="w-full sm:w-1/2">
             <h3 className="font-semibold mb-3">Genres</h3>
             <ScrollArea className="w-full h-72 pr-4">
-              {/* Tambahkan div ini untuk grid 2 kolom di mobile */}
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {genres.map((genre) => (
                   <div key={genre} className="flex items-center space-x-2">
@@ -259,7 +257,6 @@ export function ComicFilters() {
             </ScrollArea>
           </div>
 
-          {/* Kolom untuk filter lainnya */}
           <div className="w-full sm:w-1/2 flex flex-wrap sm:flex-col gap-4">
             {(
               [
@@ -298,7 +295,6 @@ export function ComicFilters() {
           </div>
         </div>
 
-        {/* Active Filters Display (Tidak ada perubahan di sini) */}
         {hasActiveFilters && (
           <div className="border-t pt-4 mt-2 flex items-center gap-2 flex-wrap">
             <span className="text-sm font-semibold">Active:</span>
