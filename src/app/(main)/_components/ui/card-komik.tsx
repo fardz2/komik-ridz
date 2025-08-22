@@ -23,12 +23,16 @@ export default function CardKomik({
     <Link href={`/komik/${slug}`}>
       <Card
         className={cn(
-          "w-52 overflow-hidden pt-0 gap-2 justify-start h-80 pb-0",
+          "overflow-hidden pt-0 gap-2 justify-start h-80 pb-0 w-full max-w-72",
           className
         )}
       >
         <div className="relative">
-          <CustomImage src={image} alt={title} className="w-full h-52" />
+          <CustomImage
+            src={image}
+            alt={title}
+            className="w-full h-52 object-cover"
+          />
           <Badge
             variant="secondary"
             className="absolute top-2 left-2 bg-black/70 text-white hover:bg-black/80"
@@ -36,13 +40,15 @@ export default function CardKomik({
             {type}
           </Badge>
         </div>
-        <div className="px-2 flex flex-col">
-          <h3 className="font-semibold text-lg leading-tight line-clamp-2">
+        <div className="px-2 flex flex-col gap-3 pb-4">
+          <h3 className="font-semibold text-lg leading-tight line-clamp-2 overflow-hidden text-ellipsis">
             {title}
           </h3>
           <div className="flex justify-between items-center">
             {chapter && (
-              <span className="text-sm text-muted-foreground">{chapter}</span>
+              <span className="text-sm text-muted-foreground line-clamp-1 overflow-hidden text-ellipsis">
+                {chapter}
+              </span>
             )}
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />

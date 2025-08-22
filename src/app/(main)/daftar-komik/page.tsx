@@ -42,7 +42,7 @@ export default async function DaftarKomikPage({
         <h1 className="text-2xl font-bold">Daftar Komik</h1>
         <ComicFilters />
       </div>
-      <div className="flex flex-wrap gap-4 justify-center xl:justify-start">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ">
         <Suspense fallback={<div>Loading...</div>}>
           {daftarKomik.data.map((komik) => (
             <CardKomik

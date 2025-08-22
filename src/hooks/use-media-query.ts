@@ -1,4 +1,4 @@
-"use client"; // <--- Tambahkan di sini
+"use client"; 
 
 import { useState, useEffect } from "react";
 

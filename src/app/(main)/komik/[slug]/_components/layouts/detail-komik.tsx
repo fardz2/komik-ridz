@@ -5,8 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { KomikDetail } from "@/types/detail-komik.type";
 import { Star, Calendar, User, BookOpen, Clock } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import CustomImage from "@/components/ui/custom-image";
+import { formatDate } from "@/lib/format-date";
 
 interface KomikDetailProps {
   komik: KomikDetail;
@@ -78,7 +78,9 @@ export function KomikDetailComponent({ komik }: KomikDetailProps) {
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">Updated:</span>
-                <span className="font-medium">{komik.updatedOn}</span>
+                <span className="font-medium">
+                  {formatDate(komik.updatedOn)}
+                </span>
               </div>
             </div>
           </div>

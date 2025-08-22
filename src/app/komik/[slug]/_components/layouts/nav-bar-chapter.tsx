@@ -21,7 +21,7 @@ export default function NavBarChapter({
   chapters,
 }: NavBarChapterProps) {
   const pathname = usePathname();
-  const isVisible = useScrollVisibility(); // 2. Gunakan hook
+  const isVisible = useScrollVisibility();
 
   const chapterMatch = pathname?.match(/chapter-(\d+)/);
   const currentChapterNumber = chapterMatch ? chapterMatch[1] : null;

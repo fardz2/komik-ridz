@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 
 export function KomikDetailSkeleton() {
   return (
-    <div className="container mx-auto p-6 max-w-6xl animate-pulse">
+    <>
       {/* Header Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* Cover Image */}
@@ -76,6 +76,6 @@ export function KomikDetailSkeleton() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </>
   );
 }
