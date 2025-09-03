@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b transition-transform duration-300">
       <Container className=" flex justify-between items-center">
         <div className="text-lg font-bold">KomikRidz</div>
         <ul className="flex space-x-4">

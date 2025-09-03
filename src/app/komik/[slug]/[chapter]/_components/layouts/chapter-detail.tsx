@@ -4,7 +4,6 @@ import { ChapterDetail } from "@/types/detail-komik.type";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import Container from "@/components/layouts/container";
 import ImageKomik from "../ui/image-komik";
-import { unstable_Activity as Activity } from "react";
 
 interface ChapterDetailProps {
   images: ChapterDetail["images"];
