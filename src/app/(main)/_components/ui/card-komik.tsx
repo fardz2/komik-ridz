@@ -23,7 +23,7 @@ export default function CardKomik({
     <Link href={`/komik/${slug}`}>
       <Card
         className={cn(
-          "overflow-hidden pt-0 gap-2 justify-start h-80 pb-0 w-full max-w-72",
+          "overflow-hidden pt-0 gap-2 justify-start h-80 pb-0 w-full  max-w-72",
           className
         )}
       >

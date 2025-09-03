@@ -5,6 +5,7 @@ import { ComicFilters } from "./_components/ui/daftar-komik-filter";
 import { Suspense } from "react";
 import { PaginationControls } from "@/components/ui/pagination-control";
 import CardKomikSkeleton from "./_components/ui/card-komik-skeleton";
+import { ComicList } from "./_components/layouts/komik-list";
 
 interface DaftarKomikPageProps {
   searchParams?: Promise<{
@@ -44,32 +45,18 @@ export default async function DaftarKomikPage({
         <ComicFilters />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-5">
-        {daftarKomik.data.length === 0 ? (
-          <p>No comics found.</p>
-        ) : (
-          <Suspense
-            key={
-              filters.page +
-              filters.genre.join(",") +
-              filters.status +
-              filters.type +
-              filters.orderby
-            }
-            fallback={<CardKomikSkeleton />}
-          >
-            {daftarKomik.data.map((komik) => (
-              <CardKomik
-                key={komik.slug}
-                title={komik.title}
-                slug={komik.slug}
-                image={komik.image}
-                type={komik.type}
-                chapter={komik.chapter}
-                rating={komik.rating}
-              />
-            ))}
-          </Suspense>
-        )}
+        <Suspense
+          key={
+            filters.page +
+            filters.genre.join(",") +
+            filters.status +
+            filters.type +
+            filters.orderby
+          }
+          fallback={<CardKomikSkeleton />}
+        >
+          <ComicList comics={daftarKomik.data} />
+        </Suspense>
       </div>
       {daftarKomik.data.length > 0 && (
         <div className="mt-5 mb-10">

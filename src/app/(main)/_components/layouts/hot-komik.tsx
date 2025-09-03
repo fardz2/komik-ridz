@@ -6,7 +6,7 @@ export default async function HotKomik() {
   return (
     <>
       {hotKomik.data.map((komik) => (
-        <CardKomik key={komik.slug} {...komik} className="max-w-56" />
+        <CardKomik key={komik.slug} {...komik} className="w-56" />
       ))}
     </>
   );

@@ -2,9 +2,7 @@ import { getChapterDetail } from "@/services/detail-komik.service";
 import BottomNavBarChapter from "../_components/layouts/bottom-navbar";
 import { ChapterDetail } from "@/types/detail-komik.type";
 
-interface ChapterLayoutProps {
-  children: React.ReactNode;
-}
+
 
 export default async function ChapterLayout({
   children,

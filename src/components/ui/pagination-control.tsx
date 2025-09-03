@@ -9,9 +9,9 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
+import { JSX } from "react";
 
-// Asumsi tipe data Anda
 type PaginationType = {
   currentPage: number;
   totalPages: number;
@@ -25,21 +25,24 @@ export function PaginationControls({
   hasNext,
   hasPrev,
 }: PaginationType) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const handleNavigation = (pageNumber: number) => {
+  // Function to generate href for a given page number
+  const createPageHref = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
-    router.push(`${pathname}?${params.toString()}`);
+    return `${pathname}?${params.toString()}`;
   };
 
   const renderPageNumbers = () => {
-    const pageNumbers = [];
+    const pageNumbers: JSX.Element[] = [];
 
-    // Tampilkan ellipsis awal jika perlu
-    if (currentPage > 2) {
+    // Skip rendering if totalPages is 1
+    if (totalPages <= 1) return pageNumbers;
+
+    // Show ellipsis at the start if currentPage > 2
+    if (currentPage > 2 && totalPages > 3) {
       pageNumbers.push(
         <PaginationItem key="start-ellipsis">
           <PaginationEllipsis />
@@ -47,7 +50,7 @@ export function PaginationControls({
       );
     }
 
-    // Tampilkan halaman di sekitar halaman saat ini
+    // Render pages around the current page
     for (
       let i = Math.max(1, currentPage - 1);
       i <= Math.min(totalPages, currentPage + 1);
@@ -55,19 +58,15 @@ export function PaginationControls({
     ) {
       pageNumbers.push(
         <PaginationItem key={i}>
-          <PaginationLink
-            onClick={() => handleNavigation(i)}
-            isActive={currentPage === i}
-            className="cursor-pointer"
-          >
+          <PaginationLink href={createPageHref(i)} isActive={currentPage === i}>
             {i}
           </PaginationLink>
         </PaginationItem>
       );
     }
 
-    // Tampilkan ellipsis akhir jika perlu
-    if (currentPage < totalPages - 1) {
+    // Show ellipsis at the end if currentPage < totalPages - 1
+    if (currentPage < totalPages - 1 && totalPages > 3) {
       pageNumbers.push(
         <PaginationItem key="end-ellipsis">
           <PaginationEllipsis />
@@ -81,54 +80,40 @@ export function PaginationControls({
   return (
     <Pagination>
       <PaginationContent>
-        {/* Tombol Previous */}
+        {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => handleNavigation(currentPage - 1)}
+            href={createPageHref(currentPage - 1)}
             aria-disabled={!hasPrev}
             tabIndex={!hasPrev ? -1 : undefined}
-            className={
-              !hasPrev ? "pointer-events-none opacity-50" : "cursor-pointer"
-            }
           />
         </PaginationItem>
 
-        {/* Tombol halaman pertama (FIXED) */}
-        {currentPage > 2 && (
+        {/* First Page */}
+        {totalPages > 3 && currentPage > 2 && (
           <PaginationItem>
-            <PaginationLink
-              onClick={() => handleNavigation(1)}
-              className="cursor-pointer"
-            >
-              1
-            </PaginationLink>
+            <PaginationLink href={createPageHref(1)}>1</PaginationLink>
           </PaginationItem>
         )}
 
-        {/* Nomor halaman di tengah */}
+        {/* Page Numbers */}
         {renderPageNumbers()}
 
-        {/* Tombol halaman terakhir (FIXED) */}
-        {currentPage < totalPages - 1 && (
+        {/* Last Page */}
+        {totalPages > 3 && currentPage < totalPages - 1 && (
           <PaginationItem>
-            <PaginationLink
-              onClick={() => handleNavigation(totalPages)}
-              className="cursor-pointer"
-            >
+            <PaginationLink href={createPageHref(totalPages)}>
               {totalPages}
             </PaginationLink>
           </PaginationItem>
         )}
 
-        {/* Tombol Next */}
+        {/* Next Button */}
         <PaginationItem>
           <PaginationNext
-            onClick={() => handleNavigation(currentPage + 1)}
+            href={createPageHref(currentPage + 1)}
             aria-disabled={!hasNext}
             tabIndex={!hasNext ? -1 : undefined}
-            className={
-              !hasNext ? "pointer-events-none opacity-50" : "cursor-pointer"
-            }
           />
         </PaginationItem>
       </PaginationContent>
