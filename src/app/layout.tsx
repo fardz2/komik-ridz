@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description:
       "Koleksi manga, manhwa, dan manhua bahasa Indonesia terlengkap. Gratis dan update setiap hari.",
     url: "https://komik-ridz.vercel.app/",
-    siteName: "Komikindo",
+    siteName: "KomikRidz",
     locale: "id_ID",
     type: "website",
   },
