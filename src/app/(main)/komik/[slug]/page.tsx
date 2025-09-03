@@ -58,12 +58,6 @@ export async function generateMetadata({
         },
       ],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${title} Bahasa Indonesia`,
-      description,
-      images: [image],
-    },
     alternates: {
       canonical: url,
     },

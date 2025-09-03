@@ -10,7 +10,6 @@ interface ChapterParams {
   slug: string;
 }
 
-// ✅ Metadata dinamis untuk Chapter
 export async function generateMetadata({
   params,
 }: {
@@ -63,15 +62,7 @@ export async function generateMetadata({
         },
       ],
     },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [data.images[0] || "/default-thumbnail.jpg"],
-    },
-    alternates: {
-      canonical: url,
-    },
+
     other: {
       // ✅ Structured data untuk Chapter (BookChapter)
       "application/ld+json": JSON.stringify({
