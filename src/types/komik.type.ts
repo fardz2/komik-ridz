@@ -30,3 +30,12 @@ export interface ComicFilters {
   orderby?: string;
   page?: number;
 }
+export interface DaftarKomikPageProps {
+  searchParams?: Promise<{
+    page?: string;
+    "genre[]"?: string | string[];
+    status?: string;
+    type?: string;
+    orderby?: string;
+  }>;
+}
